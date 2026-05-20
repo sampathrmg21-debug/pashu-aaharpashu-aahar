@@ -426,6 +426,13 @@
               </div>
             </div>
             <div class="field">
+              <label for="age">Age</label>
+              <div class="range-row">
+                <input id="age" type="range" min="12" max="180" value="48" step="6">
+                <div class="range-value"><span id="ageValue">48</span> months</div>
+              </div>
+            </div>
+            <div class="field">
               <label for="yield">Milk Yield Target</label>
               <div class="range-row">
                 <input id="yield" type="range" min="2" max="25" value="10" step="1">
@@ -506,8 +513,10 @@
   <script>
     const breedInput = document.querySelector("#breed");
     const weightInput = document.querySelector("#weight");
+    const ageInput = document.querySelector("#age");
     const yieldInput = document.querySelector("#yield");
     const weightValue = document.querySelector("#weightValue");
+    const ageValue = document.querySelector("#ageValue");
     const yieldValue = document.querySelector("#yieldValue");
     const dailyCost = document.querySelector("#dailyCost");
     const recipeList = document.querySelector("#recipeList");
@@ -519,6 +528,7 @@
     function buildRecipe() {
       const breed = breedInput.value;
       const weight = Number(weightInput.value);
+      const age = Number(ageInput.value);
       const milk = Number(yieldInput.value);
       const concentrateRate = breed === "jersey" ? 0.45 : 0.38;
       const total = roundOne(Math.max(1.5, weight * 0.002 + milk * concentrateRate));
@@ -536,6 +546,7 @@
       const saving = roundOne(marketCost - homeCost);
 
       weightValue.textContent = weight;
+      ageValue.textContent = age;
       yieldValue.textContent = milk;
       dailyCost.textContent = `Rs ${homeCost}/day`;
       recipeList.innerHTML = `
@@ -547,7 +558,7 @@
       `;
     }
 
-    [breedInput, weightInput, yieldInput].forEach((input) => {
+    [breedInput, weightInput, ageInput, yieldInput].forEach((input) => {
       input.addEventListener("input", buildRecipe);
     });
 
